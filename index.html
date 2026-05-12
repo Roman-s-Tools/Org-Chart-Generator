@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chain of Command / Org Chart Builder</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <h1>Chain of Command / Org Chart Builder</h1>
+      <p>Create polished, export-ready org charts for CAP units and events (local-only, no backend).</p>
+    </div>
+    <div class="header-actions">
+      <button id="themeToggle" type="button">Toggle Theme</button>
+      <button id="presentationToggle" type="button">Presentation Mode</button>
+      <button id="printModeToggle" type="button">Print Mode</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="panel">
+      <h2>Chart Settings</h2>
+      <div class="grid two-col">
+        <label>Chart Title <input id="chartTitle" type="text" placeholder="e.g., Squadron Staff" /></label>
+        <label>Subtitle <input id="chartSubtitle" type="text" placeholder="Optional subtitle" /></label>
+        <label>Organization <input id="orgName" type="text" placeholder="e.g., TX-123" /></label>
+        <label>Chart Type
+          <select id="chartType">
+            <option value="command">Standard command</option>
+            <option value="staff">Staff tree</option>
+            <option value="section">Section-based</option>
+            <option value="compact">Compact print</option>
+          </select>
+        </label>
+      </div>
+      <div class="inline-buttons">
+        <button id="validateBtn" type="button">Validate Chart</button>
+        <button id="duplicateBtn" type="button">Duplicate Chart</button>
+        <button id="clearBtn" type="button" class="danger">Clear All</button>
+      </div>
+      <p id="validationOutput" class="validation"></p>
+
+      <h3>Templates</h3>
+      <div class="inline-buttons wrap">
+        <button data-template="squadron">Squadron Staff</button>
+        <button data-template="encampment">Encampment Staff</button>
+        <button data-template="conference">Conference Committee</button>
+        <button data-template="cadet">Cadet Staff</button>
+        <button data-template="ics">Incident Command Staff</button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Personnel Editor</h2>
+      <form id="personForm" class="grid three-col">
+        <input id="personName" required placeholder="Name" />
+        <input id="personRank" placeholder="Grade/Rank" />
+        <input id="personPosition" required placeholder="Duty Position/Title" />
+        <input id="personSection" placeholder="Unit/Section/Dept" />
+        <input id="personEmail" type="email" placeholder="Email (optional)" />
+        <input id="personPhone" placeholder="Phone (optional)" />
+        <select id="personSupervisor"></select>
+        <select id="personCapTitle"></select>
+        <button type="submit" id="personSubmit">Add Person</button>
+      </form>
+      <div class="table-wrap">
+        <table id="peopleTable">
+          <thead><tr><th>Name</th><th>Rank</th><th>Position</th><th>Section</th><th>Supervisor</th><th>Actions</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Data I/O</h2>
+      <div class="inline-buttons wrap">
+        <button id="saveJsonBtn">Save JSON (download)</button>
+        <label class="file-btn">Load JSON <input id="loadJsonInput" type="file" accept="application/json" hidden /></label>
+        <label class="file-btn">Import CSV <input id="importCsvInput" type="file" accept=".csv,text/csv" hidden /></label>
+      </div>
+      <small>CSV columns: name, rank, position, section, email, phone, supervisorName</small>
+    </section>
+
+    <section class="panel preview-panel">
+      <div class="preview-header">
+        <h2>Live Preview</h2>
+        <div class="inline-buttons wrap">
+          <button id="exportSvgBtn">Export SVG</button>
+          <button id="exportPngBtn">Export PNG</button>
+          <button id="exportPdfBtn">Export PDF</button>
+        </div>
+      </div>
+      <div id="chartPreview" class="chart-preview"></div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
